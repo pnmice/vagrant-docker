@@ -6,11 +6,13 @@ Vagrant.configure(2) do |config|
     v.cpus = 2
   end
 
-  config.vm.network :private_network, ip: "192.168.111.222"   
+  config.vm.network :private_network, ip: "192.168.111.2"   
   
+
   config.vm.provision "shell",
     inline: "apt-get -y update"
-#    inline: "apt-get install -y linux-image-extra-`uname -r`"
-#    inline: "apt-get -y update"
-  config.vm.provision "docker"
+  config.vm.provision "docker" do |d|
+	d.pull_images "zaiste/jenkins"
+	d.run "docker run -d -p 49001:8080 -v $PWD/jenkins:/var/lib/jenkins -t zaiste/jenkins"
+  end	
 end
