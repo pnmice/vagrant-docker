@@ -13,6 +13,7 @@ Vagrant.configure(2) do |config|
     inline: "apt-get -y update"
   config.vm.provision "docker" do |d|
 	d.pull_images "zaiste/jenkins"
-	d.run "docker run -d -p 49001:8080 -v $PWD/jenkins:/var/lib/jenkins -t zaiste/jenkins"
+	d.run "zaiste/jenkins",
+		args:"-d -p 49001:8080 -v $PWD/jenkins:/var/lib/jenkins"
   end	
 end
